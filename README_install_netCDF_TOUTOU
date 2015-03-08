@@ -1,0 +1,40 @@
+# Librairies prerequises zlib curl et hdf5. hdf5 depend de zlib
+
+#=========================
+tar -xvf zlib-1.2.8.tar.gz 
+cd zlib-1.2.8
+./configure 
+make
+make test # court
+
+#===========================
+tar -zvxf curl-7.41.0.tar.gz 
+cd curl-7.41.0
+./configure 
+make
+make test # Tres long
+
+#=====================================
+./configure --with-zlib=/usr/local/lib
+make
+make install # N'installe pas dans /usr/local/lib mais dans $PWD/hdf5
+sudo cp -r hdf5/lib/* /usr/local/lib
+sudo cp -r hdf5/include/* /usr/local/include
+
+#================================
+tar -zxvf netcdf-c-4.3.3.1.tar.gz 
+cd netcdf-c-4.3.3.1
+export CPPFLAGS=-I/usr/local/include 
+export LDFLAGS=-L/usr/local/lib
+./configure
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib
+make check # Tout marche
+sudo make install
+
+#====================================
+tar -zxvf netcdf-fortran-4.4.0.tar.gz 
+cd netcdf-fortran-4.4.0
+export CPPFLAGS=-I/usr/local/include 
+export LDFLAGS=-L/usr/local/lib
+./configure
+make check

@@ -1,0 +1,4 @@
+Voir README_install_netCDF_TOUTOU pour insatllation
+
+Pour voir le contenu d'un fichier netCDF
+ncdump simple_xy.nc
